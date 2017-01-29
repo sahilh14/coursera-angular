@@ -2,7 +2,10 @@
   'use strict'
 
   angular.module('LunchCheck', [])
-  .controller('LunchCheckController', function ($scope) {
+  .controller('LunchCheckController', LunchCheckController);
+
+  LunchCheckController.$inject = ['$scope'];
+  function LunchCheckController ($scope) {
     $scope.info = "";
     $scope.message = "";
     $scope.check = function () {
@@ -12,7 +15,6 @@
         res.splice(index, 1)
         var index = res.indexOf("", 1)
       }
-      console.log(res);
       if (res.length === 1 && res[0] === ""){
         $scope.message = "Please enter data first";
       }
@@ -24,6 +26,6 @@
       }
     }
 
-  });
+  }
 
 })();
