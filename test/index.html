@@ -5,13 +5,13 @@
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
     <style> body { font-size: 1.2em; }</style>
-    <title>ng-repeat</title>
+    <title>Filter test</title>
   </head>
   <body>
-    <h1>ng-repeat</h1>
+    <h1>Keyword selection</h1>
     <div ng-controller='ShoppingListController'>
       <!-- Searchable Shopping List: -->
-      <h3>Shopping List:</h3>
+      <h3>keywords List:</h3>
       <div class="" ng-repeat="item in themes">
         <label><input type="checkbox" ng-model="mythemes[item]" ng-change="checked()">
           {{item}}</label>
@@ -21,9 +21,22 @@
           {{item}}</label>
       </div>
       <input type="text" ng-model="search">
-      <ul>
+      <div class="" ng-repeat="item in shoppingList | filter : search">
+        <label><input type="checkbox" ng-model="mykeywords[item.name]" ng-change="keywordselected()">
+          {{item.name}}</label>
+      </div>
+      <button type="button" name="button" ng-click="movekeywords()">Move</button>
+      <div class="">
+        <input type="text" ng-model="search1">
+      </div>
+      <div class="" ng-repeat="item in newbucket | filter : search1">
+        <label><input type="checkbox" ng-model="mykeywordsback[item.name]" ng-change="keywordselected()">
+          {{item.name}}</label>
+      </div>
+      <button type="button" name="button" ng-click="movekeywordsback()">Move Back</button>
+      <!-- <ul>
         <li ng-repeat="item in shoppingList | filter : search">{{ item.name }}</li>
-      </ul>
+      </ul> -->
     </div>
   </body>
 </html>
