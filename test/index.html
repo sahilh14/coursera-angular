@@ -20,7 +20,17 @@
         <label><input type="checkbox" ng-model="mytypes[item]" ng-change="checked()">
           {{item}}</label>
       </div>
+      <div class="">
+        <label><input type="checkbox" ng-model="ranking_set" ng-change="checked()">
+          Ranking</label>
+      </div>
+      <div class="">
+        <label><input type="checkbox" ng-model="target_set" ng-change="checked()">
+          Target</label>
+      </div>
       <input type="text" ng-model="search">
+      <label><input type="checkbox" ng-model="select" ng-change="selectAll()">
+        Select all</label>
       <div class="" ng-repeat="item in shoppingList | filter : search">
         <label><input type="checkbox" ng-model="mykeywords[item.name]" ng-change="keywordselected()">
           {{item.name}}</label>
@@ -29,6 +39,8 @@
       <div class="">
         <input type="text" ng-model="search1">
       </div>
+      <label><input type="checkbox" ng-model="selectback" ng-change="selectAllback()">
+        Select all</label>
       <div class="" ng-repeat="item in newbucket | filter : search1">
         <label><input type="checkbox" ng-model="mykeywordsback[item.name]" ng-change="keywordselected()">
           {{item.name}}</label>

@@ -34,6 +34,8 @@ var shoppingList = [
 
 var themes = ["T1", "T2", "T3"];
 var type = ["branded", "nonbranded"];
+var target_keywords = ["Milk", "Pepto Bismol"];
+var ranking_keywords = ["Pepto Bismol","Chocolate"];
 
 angular.module('ShoppingListApp', [])
 .controller('ShoppingListController', ShoppingListController);
@@ -50,7 +52,13 @@ function ShoppingListController($scope) {
   $scope.mykeywordsback = {};
   $scope.dummy = false;
   $scope.branded = false;
+  $scope.ranking = false;
+  $scope.target = false;
   $scope.newbucket = [];
+  $scope.ranking_set = false;
+  $scope.target_set = false;
+  $scope.select = false;
+  $scope.selectback = false;
   $scope.movekeywordsback = function () {
     var keyword_delete = [];
     console.log("mykeywordsback before->", $scope.mykeywordsback);
@@ -63,6 +71,7 @@ function ShoppingListController($scope) {
       }
     }
     console.log("mykeywordsback after->", $scope.mykeywordsback);
+    console.log("newbucket before ->", $scope.newbucket);
     // console.log("movekeywordsback - keyword_delete", keyword_delete);
     for (var i = 0; i<$scope.newbucket.length; i++){
       var obj = $scope.newbucket[i];
@@ -80,7 +89,7 @@ function ShoppingListController($scope) {
   }
   $scope.movekeywords = function () {
     var keyword_delete = [];
-    console.log("mykeywords before->", $scope.mykeywords);
+    // console.log("mykeywords before->", $scope.mykeywords);
     for (var key in $scope.mykeywords){
       if ($scope.mykeywords.hasOwnProperty(key)){
         if ($scope.mykeywords[key]){
@@ -90,7 +99,7 @@ function ShoppingListController($scope) {
       }
     }
     // console.log(keyword_delete);
-    console.log("mykeywords after->", $scope.mykeywords);
+    // console.log("mykeywords after->", $scope.mykeywords);
 
     for (var i = 0; i<$scope.shoppingList.length; i++){
       var obj = $scope.shoppingList[i];
@@ -108,9 +117,35 @@ function ShoppingListController($scope) {
       }
     }
 
-    console.log("keywordarray -> ", $scope.keywordarray);
-    console.log("shoppingList -> ", $scope.shoppingList);
+    // console.log("keywordarray -> ", $scope.keywordarray);
+    // console.log("shoppingList -> ", $scope.shoppingList);
   }
+  $scope.selectAll = function (keywords) {
+    if($scope.select){
+      for (var obj in $scope.shoppingList){
+        $scope.mykeywords[$scope.shoppingList[obj].name] = true;
+      }
+    }
+    else{
+      for (var obj in $scope.shoppingList){
+        $scope.mykeywords[$scope.shoppingList[obj].name] = false;
+      }
+    }
+    // console.log("not");
+  }
+  $scope.selectAllback= function () {
+    if($scope.selectback){
+      for (var obj in $scope.newbucket){
+        $scope.mykeywordsback[$scope.newbucket[obj].name] = true;
+      }
+    }
+    else{
+      for (var obj in $scope.newbucket){
+        $scope.mykeywordsback[$scope.newbucket[obj].name] = false;
+      }
+    }
+  }
+
   $scope.keywordselected = function () {
     console.log("not");
   }
@@ -152,6 +187,34 @@ function ShoppingListController($scope) {
       $scope.shoppingList = finalList;
       $scope.branded = false;
     }
+    finalList = [];
+    if ($scope.ranking_set){
+      $scope.ranking = true;
+      for (var i = 0; i<$scope.shoppingList.length; i++){
+        var obj = $scope.shoppingList[i];
+        if(ranking_keywords.indexOf(obj.name) !== -1){
+          finalList.push(obj);
+        }
+      }
+    }
+    if ($scope.ranking === true){
+      $scope.shoppingList = finalList;
+      $scope.ranking = false;
+    }
+    if ($scope.target_set){
+      $scope.target = true;
+      for (var i = 0; i<$scope.shoppingList.length; i++){
+        var obj = $scope.shoppingList[i];
+        if(target_keywords.indexOf(obj.name) !== -1){
+          finalList.push(obj);
+        }
+      }
+    }
+    if ($scope.target === true){
+      $scope.shoppingList = finalList;
+      $scope.target = false;
+    }
+
   }
 }
 
