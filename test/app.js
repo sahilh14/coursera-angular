@@ -4,31 +4,31 @@
 var shoppingList = [
   {name:"Milk",
    type:"branded",
-   theme:"T1"
+   theme:["T1", "T2"]
   },
   {name:"Donuts",
    type:"nonbranded",
-   theme:"T2"
+   theme:["T2"]
   },
   {name:"Cookies",
    type:"branded",
-   theme:"T2"
+   theme:["T2"]
   },
   {name:"Chocolate",
    type:"nonbranded",
-   theme:"T1"
+   theme:["T1"]
   },
   {name:"Peanut Butter",
    type:"branded",
-   theme:"T1"
+   theme:["T1"]
   },
   {name:"Pepto Bismol",
    type:"branded",
-   theme:"T3"
+   theme:["T3"]
   },
   {name:"Pepto Bismol (Chocolate flavor)",
    type:"nonbranded",
-   theme:"T3"
+   theme:["T3"]
   },
 ];
 
@@ -156,8 +156,13 @@ function ShoppingListController($scope) {
         if ($scope.mythemes[key]){
           $scope.dummy = true;
           for (var item in $scope.keywordarray){
-            if ($scope.keywordarray[item].theme === key){
+            // console.log("key ->", key);
+            // console.log("$scope.keywordarray[item].theme ->", $scope.keywordarray[item].theme[0]);
+            // console.log("key in ->", key in $scope.keywordarray[item].theme);
+            if ($scope.keywordarray[item].theme.indexOf(key) != -1){
+              if (newShoppingList.indexOf($scope.keywordarray[item]) == -1){
                 newShoppingList.push($scope.keywordarray[item]);
+              }
             }
           }
         }
