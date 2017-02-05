@@ -38,7 +38,8 @@ var target_keywords = ["Milk", "Pepto Bismol"];
 var ranking_keywords = ["Pepto Bismol","Chocolate"];
 
 angular.module('ShoppingListApp', [])
-.controller('ShoppingListController', ShoppingListController);
+.controller('ShoppingListController', ShoppingListController)
+.filter('Mysearch', customFilter);
 
 ShoppingListController.$inject = ['$scope'];
 function ShoppingListController($scope) {
@@ -59,6 +60,7 @@ function ShoppingListController($scope) {
   $scope.target_set = false;
   $scope.select = false;
   $scope.selectback = false;
+  $scope.search = "";
   $scope.movekeywordsback = function () {
     var keyword_delete = [];
     console.log("mykeywordsback before->", $scope.mykeywordsback);
@@ -120,10 +122,20 @@ function ShoppingListController($scope) {
     // console.log("keywordarray -> ", $scope.keywordarray);
     // console.log("shoppingList -> ", $scope.shoppingList);
   }
-  $scope.selectAll = function (keywords) {
+  $scope.selectAll = function (search) {
     if($scope.select){
       for (var obj in $scope.shoppingList){
-        $scope.mykeywords[$scope.shoppingList[obj].name] = true;
+        if (search !== ""){
+            if ($scope.shoppingList[obj].name.toLowerCase().includes(search.toLowerCase())){
+              // newbuck.push($scope.shoppingList[obj]);
+              $scope.mykeywords[$scope.shoppingList[obj].name] = true;
+            }
+          }
+          else{
+            $scope.mykeywords[$scope.shoppingList[obj].name] = true;            
+          }
+
+        // $scope.mykeywords[$scope.shoppingList[obj].name] = true;
       }
     }
     else{
@@ -217,5 +229,20 @@ function ShoppingListController($scope) {
 
   }
 }
+
+function customFilter() {
+  return function (text, search) {
+    if (search === ""){
+      return text
+    }
+    var newbuck = [];
+    for (var item in text){
+      if (text[item].name.toLowerCase().includes(search.toLowerCase())){
+        newbuck.push(text[item]);
+      }
+    }
+    return newbuck
+  }
+};
 
 })();

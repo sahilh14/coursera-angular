@@ -29,9 +29,9 @@
           Target</label>
       </div>
       <input type="text" ng-model="search">
-      <label><input type="checkbox" ng-model="select" ng-change="selectAll()">
+      <label><input type="checkbox" ng-model="select" ng-change="selectAll(search)">
         Select all</label>
-      <div class="" ng-repeat="item in shoppingList | filter : search">
+      <div class="" ng-repeat="item in shoppingList | Mysearch : search">
         <label><input type="checkbox" ng-model="mykeywords[item.name]" ng-change="keywordselected()">
           {{item.name}}</label>
       </div>
